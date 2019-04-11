@@ -1,0 +1,98 @@
+<mat-card>
+  <mat-card-title>{{ 'HOME.TripDetails' | translate }}</mat-card-title>
+  <mat-grid-list cols="2" rows="1" rowHeight="500px" class="w-100" *ngIf="isDesktopDevice==true">
+    <mat-grid-tile class="w-50">
+      <mat-list>
+        <mat-list-item> {{ 'HOME.Username' | translate }} : <a [routerLink]="['/profile', Trip?.driver?.id ]"> {{ Trip?.driver?.username }}</a></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>  {{ 'HOME.fromDest' | translate }} :{{Trip?.fromDestination}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'HOME.StartTime' | translate }} : {{Trip?.startDate | date}} / {{Trip?.startTime}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>  {{ 'HOME.carInfo' | translate }} :{{Trip?.carInfo}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'HOME.seatsNo' | translate }} :{{Trip?.seatsNo}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'NewTrip.CarModel' | translate }} :{{Trip?.carModel}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'NewTrip.CarBrand' | translate }} :{{Trip?.carBrand}}</mat-list-item>
+        <mat-divider></mat-divider>
+       
+
+
+      </mat-list>
+    </mat-grid-tile>
+
+    <mat-grid-tile class="w-50">
+      <mat-list>
+        <mat-list-item> {{ 'HOME.price' | translate }} :{{Trip?.price}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'HOME.toDest' | translate }} :{{Trip?.toDestination}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'HOME.carNo' | translate }} :{{Trip?.carNo}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>  {{ 'HOME.Status' | translate }} :{{Trip?.status}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'NewTrip.manufacturingYear' | translate }} :{{Trip?.manufacturingYear}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'NewTrip.CarColor' | translate }} :{{Trip?.carColor}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>  {{ 'HOME.details' | translate }} :{{Trip?.details}}</mat-list-item>
+        <mat-divider></mat-divider>
+
+      </mat-list>
+    </mat-grid-tile>
+
+
+  </mat-grid-list>
+  <mat-grid-list cols="1" rows="1" rowHeight="500px" *ngIf="isMobile">
+    <mat-grid-tile class="w-100" >
+      <mat-list>
+        <mat-list-item></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'HOME.Username' | translate }} : <a [routerLink]="['/profile', Trip?.driver?.id ]"> {{ Trip?.driver?.username }}</a></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>  {{ 'HOME.fromDest' | translate }} :{{Trip?.fromDestination}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'HOME.toDest' | translate }} :{{Trip?.toDestination}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'HOME.StartTime' | translate }} :({{Trip?.startTime}}) // ({{Trip?.startDate}})</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'HOME.ArriveTime' | translate }} :{{Trip?.arriveTime}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>  {{ 'HOME.carInfo' | translate }} :{{Trip?.carInfo}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>  {{ 'HOME.details' | translate }} :{{Trip?.details}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'HOME.seatsNo' | translate }} :{{Trip?.seatsNo}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'HOME.price' | translate }} :{{Trip?.price}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'NewTrip.CarModel' | translate }} :{{Trip?.carModel}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'NewTrip.manufacturingYear' | translate }} :{{Trip?.manufacturingYear}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'NewTrip.CarColor' | translate }} :{{Trip?.carColor}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'HOME.carNo' | translate }} :{{Trip?.carNo}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>  {{ 'HOME.Status' | translate }} :{{Trip?.status}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> {{ 'NewTrip.CarBrand' | translate }} :{{Trip?.carBrand}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item></mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </mat-grid-tile>
+
+
+  </mat-grid-list>
+  <div *ngIf="Trip?.driver?.id == authService.getLoggedInUserId()">
+    <app-trip-owner-details [requests]="Trip"></app-trip-owner-details>
+  </div>
+  <div *ngIf="Trip?.driver?.id != authService.getLoggedInUserId()">
+    <app-trip-requester-details [requests]="Trip?.tripRequest"></app-trip-requester-details>
+  </div>
+
+  <button *ngIf="Trip?.driverId != authService.getLoggedInUserId()" class="btn btn-danger btn-round m-2" mat-raised-button color="primary" (click)="openRideDialog()">{{ 'HOME.rideButton' | translate }}</button>
+</mat-card>

@@ -1,0 +1,36 @@
+<form [formGroup]="ratingForm">
+<div class="container">
+  <div class="row">
+    
+    <div class="rating">
+      <input type="radio" id="star10" name="rating" (click)="setradio(10)"/><label for="star10" title="Rocks!">5 stars</label>
+      <input type="radio" id="star9" name="rating" (click)="setradio(9)" /><label for="star9" title="Rocks!">4 stars</label>
+      <input type="radio" id="star8" name="rating" (click)="setradio(8)" /><label for="star8" title="Pretty good">3 stars</label>
+      <input type="radio" id="star7" name="rating" (click)="setradio(7)" /><label for="star7" title="Pretty good">2 stars</label>
+      <input type="radio" id="star6" name="rating" (click)="setradio(6)" /><label for="star6" title="Meh">1 star</label>
+      <input type="radio" id="star5" name="rating" (click)="setradio(5)" /><label for="star5" title="Meh">5 stars</label>
+      <input type="radio" id="star4" name="rating" (click)="setradio(4)" /><label for="star4" title="Kinda bad">4 stars</label>
+      <input type="radio" id="star3" name="rating" (click)="setradio(3)" /><label for="star3" title="Kinda bad">3 stars</label>
+      <input type="radio" id="star2" name="rating" (click)="setradio(2)" /><label for="star2" title="Sucks big tim">2 stars</label>
+      <input type="radio" id="star1" name="rating" (click)="setradio(1)" /><label for="star1" title="Sucks big time">1 star</label>
+    </div>
+  </div>
+  <mat-label>{{ 'HOME.RateValue' | translate }} : {{ratingValue}}</mat-label>
+
+</div>
+
+<div class="container">
+
+  <mat-form-field>
+    <textarea matInput placeholder="{{ 'HOME.LeaveComment' | translate }}" class="w-100" formControlName="note"></textarea>
+  </mat-form-field>
+
+
+</div>
+
+  </form>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="primary">{{ 'HOME.Cancel' | translate }}</button>
+  <button mat-button color="primary" (click)="CreateNewRate()">{{ 'HOME.submit' | translate }}</button>
+</mat-dialog-actions>

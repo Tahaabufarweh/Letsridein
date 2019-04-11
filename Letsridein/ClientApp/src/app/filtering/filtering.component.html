@@ -1,0 +1,52 @@
+<mat-dialog-content>
+  <form [formGroup]="FilterForm">
+    <div class="row">
+      <mat-form-field class="w-100">
+        <input matInput disabled value="{{ 'HOME.Destination' | translate }}">
+      </mat-form-field>
+    </div>
+    <div class="row mb-1 mx-1">
+      <mat-form-field class="m-1">
+        <input matInput formControlName="FromDest" placeholder="{{ 'HOME.fromDest' | translate }}">
+      </mat-form-field>
+      <mat-form-field class="m-1">
+        <input matInput formControlName="ToDest" placeholder="{{ 'HOME.toDest' | translate }}">
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="w-100">
+        <input matInput disabled value="{{ 'HOME.Time' | translate }}">
+      </mat-form-field>
+    </div>
+    <div class="row mb-1 mx-1">
+      <mat-form-field class="m-1 w-100">
+        <input matInput [matDatepicker]="picker" formControlName="StartTime" placeholder="{{ 'HOME.StartTime' | translate }}">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      
+      </mat-form-field>
+
+    </div>
+
+    <div class="row">
+      <mat-form-field class="w-100">
+        <input matInput disabled value="{{ 'HOME.price' | translate }}">
+      </mat-form-field>
+    </div>
+    <div class="row mb-1 mx-1">
+      <mat-form-field class="m-1">
+        <input matInput type="number" formControlName="PriceMin" placeholder="{{ 'HOME.minPrice' | translate }}">
+      </mat-form-field>
+      <mat-form-field class="m-1">
+        <input matInput type="number" formControlName="PriceMax" placeholder="{{ 'HOME.maxPrice' | translate }}">
+      </mat-form-field>
+    </div>
+
+  </form>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>{{ 'HOME.Cancel' | translate }}</button>
+    <button mat-button (click)="close()">{{ 'HOME.Search' | translate }}</button>
+  </mat-dialog-actions>
+  </mat-dialog-content>

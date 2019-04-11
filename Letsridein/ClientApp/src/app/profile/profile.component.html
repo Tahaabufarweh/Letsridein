@@ -1,0 +1,234 @@
+
+
+
+<div class="row">
+
+
+
+
+
+  <div class="col">
+    <mat-card class="text-center">
+      <mat-card-header>
+        <div class="avatar-upload">
+          <div class="avatar-edit">
+            <input type='file' id="imageUpload" (change)=readUrl($event) accept=".png, .jpg, .jpeg" />
+            <label for="imageUpload" *ngIf="user.id ==authService.getLoggedInUserId()"></label>
+          </div>
+          <div class="avatar-preview">
+            <img class="imgpreview" [src]="user.profileImageName ? user.profileImageName : this.url" />
+          </div>
+
+
+        </div>
+
+      </mat-card-header>
+      <h4 class="card-category text-gray">{{user.username}}</h4>
+
+      <h6 class="card-title">{{user.country}}</h6>
+
+     
+
+
+      <div class="row text-center">
+        <div class="col" *ngIf="user.id !=authService.getLoggedInUserId()">
+          <button mat-raised-button color="primary" (click)="openRatingDialog()">{{ 'HOME.rateButton' | translate }}</button>
+          <div class="m-2"></div>
+          <button mat-raised-button color="primary" (click)="openReportDialog()">{{ 'HOME.report' | translate }}</button>
+
+        </div>
+         
+        <div class="col" *ngIf="user.id ==authService.getLoggedInUserId()">
+          <button mat-raised-button color="primary" (click)="openCompleteDialog()">{{ 'HOME.editprofileinfo' | translate }}</button>
+          <div class="m-2"></div>
+        </div>
+        </div>
+    </mat-card>
+  </div>
+  <div class="col">
+
+    <mat-card class="col-md-12">
+      <mat-tab-group>
+        <mat-tab label="{{ 'HOME.ProfileInfo' | translate }}">
+
+          <mat-list>
+            <mat-list-item>
+              <div *ngIf="user.fullName !== null">
+                <mat-icon matPrefix>person</mat-icon><b>{{ 'HOME.FullName' | translate }} </b>{{user.fullName}}
+              </div>
+            </mat-list-item>
+
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div *ngIf="user.gender !== null">
+                <div *ngIf="user.gender==true ;else female">
+                  <i class="material-icons">wc</i>
+                  <b>{{ 'HOME.Gender' | translate }} </b>Male
+                </div>
+                <ng-template #female>
+
+                  <i class="material-icons">wc</i>
+                  <b>{{ 'HOME.Gender' | translate }} </b>Female
+
+                </ng-template>
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div *ngIf="user.country !== null">
+                <i class="material-icons">language</i><b>{{ 'HOME.country' | translate }} </b>{{user.country}}
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div *ngIf="user.username !== null">
+                <i class="material-icons">person_pin</i><b>{{ 'HOME.Username' | translate }} </b>{{user.username}}
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div *ngIf="user.email !== null">
+                <i class="material-icons">email</i><b>{{ 'HOME.Email' | translate }} </b> {{user.email}}
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div *ngIf="user.mobileNumber !== null">
+                <i class="material-icons">phone_iphone</i><b>{{ 'HOME.MobileNumber' | translate }} </b> {{ user.mobileNumber }}
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div *ngIf="user.birthDate !== null">
+                <i class="material-icons">date_range</i><b>{{ 'HOME.BirthDate' | translate }} </b>{{ user.birthDate | date }}
+              </div>
+            </mat-list-item>
+            
+          </mat-list>
+        </mat-tab>
+        <mat-tab label="{{ 'HOME.carInfo' | translate }}">
+
+          <mat-list>
+
+            <mat-list-item>
+              <div *ngIf="user.carInfo !== null">
+                <i class="material-icons">directions_car</i><b>{{ 'HOME.carInfo' | translate }} </b>{{ user.carInfo}}
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div *ngIf="user.carModel !== null">
+                <i class="material-icons">directions_car</i><b>{{ 'NewTrip.CarModel' | translate }} </b>{{ user.carModel }}
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div *ngIf="user.carBrand !== null">
+                <i class="material-icons">directions_car</i><b>{{ 'NewTrip.CarBrand' | translate }} </b>{{ user.carBrand}}
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div *ngIf="user.carColor !== null">
+                <i class="material-icons">directions_car</i><b>{{ 'NewTrip.CarColor' | translate }} </b>{{ user.carColor}}
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+
+            <mat-list-item>
+              <div *ngIf="user.manufacturingYear !== null">
+                <i class="material-icons">date_range</i><b>{{ 'NewTrip.manufacturingYear' | translate }} </b>{{ user.manufacturingYear}}
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <div *ngIf="user.carNumber !== null">
+                <i class="material-icons">format_list_numbered</i><b>{{ 'HOME.carNo' | translate }} </b>{{ user.carNumber}}
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+          </mat-list>
+        </mat-tab>
+        <mat-tab label="{{ 'HOME.TripsLabel' | translate }}">
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{{ 'HOME.details' | translate }} </th>
+                <th>{{ 'HOME.fromDest' | translate }} </th>
+                <th>{{ 'HOME.toDest' | translate }} </th>
+                <th>{{ 'HOME.StartTime' | translate }} </th>
+                <th>{{ 'HOME.Status' | translate }} </th>
+                <th>{{ 'HOME.isArrived' | translate }} </th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let T of user.trip">
+                <td><a [routerLink]="['/trip-details',T.id ]">{{T.id}}</a></td>
+                <td>{{T.fromDestination}}</td>
+                <td>{{T.toDestination}}</td>
+                <td>{{T.startTime}}</td>
+                <td *ngIf="T.status==1">{{ 'HOME.Opened' | translate }}</td>
+                <td *ngIf="T.status==2">{{ 'HOME.Closed' | translate }}</td>
+                <td *ngIf="T.status==3">{{ 'HOME.FullBoard' | translate }}</td>
+                <td *ngIf="T.status==4">{{ 'HOME.Deleted' | translate }}</td>
+                <td *ngIf="T.isArrived == true;else no">{{ 'HOME.yes' | translate }}</td>
+                <ng-template #no><td>{{ 'HOME.no' | translate }}</td></ng-template>
+              </tr>
+            </tbody>
+          </table>
+
+
+        </mat-tab>
+        <mat-tab label="{{ 'HOME.Requests' | translate }}" *ngIf="user.id ==authService.getLoggedInUserId()">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{{ 'HOME.RequestDate' | translate }} </th>
+                <th>{{ 'HOME.PassengerNote' | translate }} </th>
+                <th>{{ 'HOME.Status' | translate }} </th>
+                <th>{{ 'HOME.PaymentMethod' | translate }} </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let R of user.tripRequest">
+                <td>{{ R.requestDate | date}}</td>
+                <td>{{ R.passengerNote }}</td>
+                <td *ngIf="R.status==1">{{ 'HOME.New' | translate }}</td>
+                <td *ngIf="R.status==2">{{ 'HOME.Approved' | translate }}</td>
+                <td *ngIf="R.status==3">{{ 'HOME.Reject' | translate }}</td>
+                <td>{{getPaymentMethod(R.paymentMethod) }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </mat-tab>
+        <mat-tab label="{{ 'HOME.Ratings' | translate }}">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{{ 'HOME.Username' | translate }} </th>
+                <th>{{ 'HOME.RateValue' | translate }} </th>
+                <th>{{ 'HOME.Note' | translate }} </th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let R of user.ratingRatedUserNavigation">
+                <th scope="row"><a [routerLink]="['/profile',R.user.id ]">{{R.user.username}}</a></th>
+                <td> {{ R.rating1 }}<i class="material-icons">star_rate</i></td>
+                <td>{{ R.note }}</td>
+
+              </tr>
+            </tbody>
+          </table>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+
+
+  </div>
+
+</div>

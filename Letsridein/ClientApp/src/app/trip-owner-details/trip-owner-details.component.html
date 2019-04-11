@@ -1,0 +1,26 @@
+<mat-card-title>{{ 'HOME.Requests' | translate }} </mat-card-title>
+<div *ngFor="let request of tripRequests">
+  <mat-card>
+    <mat-card-header>
+      <img *ngIf="request.passenger.profileImageName !==null" mat-card-avatar class="avatar-preview" [src]="request?.passenger.profileImageName ? 'ProfilePictures/' + request?.passenger.id + '/' + request?.passenger.profileImageName : this.url " />
+      <div *ngIf="request.passenger.profileImageName ===null" mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{ 'HOME.Username' | translate }} <a [routerLink]="['/profile',request.passenger.id ]">{{request.passenger.username}}</a></mat-card-title>
+      <mat-card-subtitle>{{ 'HOME.RequestedOn' | translate }} {{request.requestDate}}</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <p>
+      {{request.passengerNote}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <mat-hint *ngIf="request.status == 2"> {{ 'HOME.Approved' | translate }}</mat-hint>
+      <mat-hint *ngIf="request.status == 3"> {{ 'HOME.Reject' | translate }}</mat-hint>
+      <div  *ngIf="request.status == 1">
+        <button mat-button color="primary" (click)="acceptOrReject(request.id, 2)">{{ 'HOME.accept' | translate }}</button>
+        <button mat-button color="primary" (click)="acceptOrReject(request.id, 3)">{{ 'HOME.reject' | translate }}</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+  </div>
+

@@ -1,0 +1,189 @@
+<div class="main-content ">
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <mat-card>
+          <i class="material-icons lg">
+            directions_car
+          </i>
+          <p>{{ 'HOME.#OfTrips' | translate }} {{all.totalTrips}}</p>
+        </mat-card>
+      </div>
+     
+      <div class="col text-center">
+        <mat-card>
+          <i class="material-icons lg">
+            how_to_reg
+          </i>
+          <p>{{ 'HOME.#OfUsers' | translate }}{{totalusers}}</p>
+        </mat-card>
+      </div>
+      <div class="col text-center">
+        <mat-card>
+          <i class="material-icons lg">
+            report
+          </i>
+          <p>{{ 'HOME.#OfReports' | translate }} {{totalReports}}</p>
+        </mat-card>
+      </div>
+    </div>
+    <br />
+    <br />
+    <br />
+   
+    <div class="row">
+      
+      <mat-tab-group class="w-100">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">how_to_reg</mat-icon>
+            {{ 'HOME.Users' | translate }}
+          </ng-template>
+          <mat-card>
+            <div>
+              <mat-form-field class="w-100">
+                <input matInput (keyup)="applyUserFilter($event.target.value)" placeholder="{{ 'HOME.filterButton' | translate }}" [formControl]="filter">
+              </mat-form-field>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>{{ 'HOME.id' | translate }} </th>
+                    <th>{{ 'HOME.Username' | translate }} </th>
+                    <th>{{ 'HOME.FullName' | translate }} </th>
+                    <th>{{ 'HOME.Email' | translate }} </th>
+                    <th>{{ 'HOME.country' | translate }} </th>
+                    <th>{{ 'HOME.Gender' | translate }} </th>
+                    <th>{{ 'HOME.MobileNumber' | translate }} </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of users">
+                    <td>{{user.id}}</td>
+                    <td><a [routerLink]="['/profile',user.id ]">{{user.username}}</a></td>
+                    <td>{{user.fullName}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.country}}</td>
+                    <td>{{user.gender}}</td>
+                    <td>{{user.gender}}</td>
+                  </tr>
+                </tbody>
+              </table>
+             
+            </div>
+            <mat-paginator [length]="totalusers" [pageSize]="5" [pageSizeOptions]="[5, 10, 15, 20, 25]" (page)="onPageChanged($event)"></mat-paginator>
+
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">directions_car</mat-icon>
+            {{ 'HOME.TripsLabel' | translate }}
+          </ng-template>
+          
+          <mat-card>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>{{ 'HOME.id' | translate }} </th>
+                  <th>{{ 'HOME.DriverId' | translate }} </th>
+                  <th>{{ 'HOME.fromDest' | translate }} </th>
+                  <th>{{ 'HOME.toDest' | translate }} </th>
+                  <th>{{ 'HOME.isArrived' | translate }} </th>
+                  <th>{{ 'HOME.StartTime' | translate }} </th>
+                  <th>{{ 'HOME.ArriveTime' | translate }} </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let trip of allTrips">
+                  <td>{{trip.id}}</td>
+                  <td><a  [routerLink]="['/profile',trip.driver.id ]">{{trip.driver.username}}</a></td>
+                  <td>{{trip.fromDestination}}</td>
+                  <td>{{trip.toDestination}}</td>
+                  <td>{{trip.isArrived}}</td>
+                  <td>{{trip.startTime}}</td>
+                  <td>{{trip.arriveTime}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <mat-paginator [length]="all.totalTrips" [pageSize]="5" [pageSizeOptions]="[5, 10, 15, 20, 25]" (page)="tripsPageChanged($event)"></mat-paginator>
+
+          </mat-card>
+          
+        </mat-tab>
+
+        <mat-tab>
+
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">report</mat-icon>
+            {{ 'HOME.Reports' | translate }}
+          </ng-template>
+
+
+          <mat-card>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>{{ 'HOME.id' | translate }} </th>
+                  <th>{{ 'HOME.UserId' | translate }} </th>
+                  <th>{{ 'HOME.ReportedUser' | translate }} </th>
+                  <th>{{ 'HOME.ReportType' | translate }} </th>
+                  <th>{{ 'HOME.Note' | translate }} </th>
+                 
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let report of reports">
+                  <td>{{report.id}}</td>
+                  <td><a [routerLink]="['/profile',report.user.id ]">{{report.user.username}}</a></td>
+                  <td><a [routerLink]="['/profile',report.reportedUserNavigation.id ]">{{report.reportedUserNavigation.username}}</a></td>
+                  <td>{{report.reportType}}</td>
+                  <td>{{report.note}}</td>
+                 
+                </tr>
+              </tbody>
+            </table>
+            <mat-paginator [length]="totalReports" [pageSize]="5" [pageSizeOptions]="[5, 10, 15, 20, 25]" (page)="reportsPageChanged($event)"></mat-paginator>
+
+          </mat-card>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">add_to_photos</mat-icon>
+            Advertisements
+          </ng-template>
+          <br />
+          <div class="text-center">
+            <button mat-stroked-button color="primary" (click)="openAdsDialog()">Create AD</button>
+          </div>
+
+          <br />
+          <br />
+          <div *ngFor="let ad of ads">
+            <mat-card>
+              <mat-card-header>
+
+                <mat-card-title>ID: {{ad.id}}</mat-card-title>
+                <mat-card-subtitle>AD Link :<a href="{{ad.advLink}}">{{ad.advLink}}</a></mat-card-subtitle>
+
+              </mat-card-header>
+
+              <img class="avatar-preview w-100" [src]="ad?.imageName ? 'AdsPictures' + '/' + ad?.imageName : this.url " />
+
+
+              <mat-card-actions>
+                <button mat-stroked-button (click)="DeleteAd(ad.id)" color="primary">Delete</button>
+
+              </mat-card-actions>
+            </mat-card>
+
+           <br />
+          </div>
+
+
+        </mat-tab>
+      </mat-tab-group>
+       
+    </div>
+  </div>
+</div>

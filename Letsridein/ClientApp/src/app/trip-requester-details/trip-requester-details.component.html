@@ -1,0 +1,25 @@
+<mat-card-title>{{ 'HOME.Requests' | translate }} </mat-card-title>
+<div *ngFor="let request of tripRequests">
+  <mat-card *ngIf="request.passengerId == authService.getLoggedInUserId()">
+    <mat-card-header>
+      <img *ngIf="request.passenger.profileImageName !==null" mat-card-avatar class="avatar-preview" [src]="request?.passenger.profileImageName ? 'ProfilePictures/' + request?.passenger.id + '/' + request?.passenger.profileImageName : this.url " />
+      <div *ngIf="request.passenger.profileImageName ===null" mat-card-avatar class="example-header-image"></div>
+      <mat-card-title> <a [routerLink]="['/profile',request.passenger.id ]">{{request.passenger.username}}</a></mat-card-title>
+      <mat-card-subtitle>{{ 'HOME.RequestedOn' | translate }} {{request.requestDate}}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>
+        {{request.passengerNote}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <mat-hint *ngIf="request.status ==2"> {{ 'HOME.Approved' | translate }}</mat-hint>
+      <mat-hint *ngIf="request.status ==3"> {{ 'HOME.Reject' | translate }}</mat-hint>
+      <button  mat-button color="primary" (click)="deleteRequest(request.id)">{{ 'HOME.Delete' | translate }}</button>
+     
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+

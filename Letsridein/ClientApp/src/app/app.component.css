@@ -1,0 +1,37 @@
+@media (max-width: 767px) {
+  /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
+  .body-content {
+    padding-top: 50px;
+  }
+}
+
+.example-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.example-icon {
+  padding: 0 14px;
+}
+.mat-drawer.mat-drawer-side {
+  z-index: 2;
+  background-color: #3F51B5;
+  color:white;
+}
+.mat-list-item {
+  color: white; 
+}
+active-list-item {
+  color: #3F51B5 !important;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+.example-radio-group {
+  display: block;
+  border: 1px solid #555;
+  margin: 20px;
+  padding: 10px;
+}

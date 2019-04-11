@@ -1,0 +1,87 @@
+<mat-card>
+  <div class="row">
+    <div class="col-md-9">
+      <mat-card-header>
+
+        <mat-card-title>
+
+
+          <h4>{{ 'HOME.TripsLabel' | translate }}</h4>
+
+        </mat-card-title>
+      </mat-card-header>
+    </div>
+
+    <div class="col-md-3">
+      <button class="btn btn-danger btn-round mt-lg-5" mat-raised-button color="primary" (click)="openDialog()">
+        {{ 'HOME.filterButton' | translate }} <mat-icon>filter_list</mat-icon>
+      </button>
+
+
+    </div>
+
+
+
+
+  </div>
+  <br />
+  <br />
+  <div class="row">
+    <br />
+    <div class="col-md-6" *ngFor="let trip of allTrips?.trips" style="margin-top:10px">
+
+      <mat-card class="example-card">
+        <mat-card-header>
+          <img *ngIf="trip?.driver.profileImageName !==null" mat-card-avatar class="avatar-preview" [src]="trip?.driver.profileImageName" />
+          <div *ngIf="trip?.driver.profileImageName ===null" mat-card-avatar class="example-header-image"></div>
+          <mat-card-title><a [routerLink]="['/profile',trip?.driver.id ]">{{trip?.driver.username}}</a></mat-card-title>
+          <mat-card-subtitle>{{ 'HOME.fromDest' | translate }}  {{trip?.fromDestination}}  {{ 'HOME.toDest' | translate }}  {{trip?.toDestination}}</mat-card-subtitle>
+          <mat-card-subtitle>{{ 'HOME.StartTime' | translate }} : {{trip?.startDate | date}} | {{trip?.startTime}}  |  {{ 'HOME.price' | translate }} :   {{trip?.price}} </mat-card-subtitle>
+
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{trip?.details}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="navigateToDetails(trip.id)"> {{ 'HOME.details' | translate }}</button>
+
+          <button *ngIf="trip?.driver.id !=authService.getLoggedInUserId()" mat-button (click)="openRideDialog(trip.id)">{{ 'HOME.rideButton' | translate }}</button>
+
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+  </div>
+  <mat-paginator [length]="allTrips?.totalTrips"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="onPageChanged($event)">
+  </mat-paginator>
+
+  <simple-notifications></simple-notifications>
+</mat-card>
+
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block ad-preview w-100" src="" /> 
+    </div>
+    
+      <div class="carousel-item" *ngFor="let ad of ads" >
+       <a href="{{ad.advLink}}" *ngIf="ad.isActive"><img class="d-block ad-preview w-100" [src]="ad?.imageName ? 'AdsPictures' + '/' + ad?.imageName : this.url " /></a>
+      </div>
+    
+
+
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>

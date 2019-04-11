@@ -1,0 +1,95 @@
+<body>
+  <mat-sidenav-container [dir]="isRtl()" class="example-container" autosize>
+    <mat-sidenav #sidenav class="example-sidenav" mode="side" opened="true" *ngIf="!isLoginOrSignUp()">
+      <mat-nav-list *ngIf="isMobile!==true">
+        <mat-list-item>
+          <button mat-icon-button (click)="isExpanded = !isExpanded">
+            <mat-icon *ngIf="!isExpanded && translate.currentLang !== 'ar'">chevron_right</mat-icon>
+            <mat-icon *ngIf="isExpanded  && translate.currentLang !== 'ar'">chevron_left</mat-icon>
+            <mat-icon *ngIf="!isExpanded && translate.currentLang === 'ar'">chevron_left</mat-icon>
+            <mat-icon *ngIf="isExpanded  && translate.currentLang === 'ar'">chevron_right</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-list-item>
+          <a mat-list-item [routerLink]="['/trips']" routerLinkActive="active-link">
+            <i mat-list-icon class="material-icons">card_travel</i>
+            <p matLine *ngIf="isExpanded">{{ 'HOME.TripsLabel' | translate }}</p>
+          </a>
+        </mat-list-item>
+        <mat-list-item>
+          <a mat-list-item [routerLink]="['/new-trip']" routerLinkActive="active-link">
+            <i mat-list-icon class="material-icons">directions_car</i>
+            <p matLine *ngIf="isExpanded">{{ 'HOME.newTripLabel' | translate }}</p>
+          </a>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <div class="example-sidenav-content">
+      <mat-toolbar color="primary" style="margin-bottom:10px;">
+        <img src="pic1.png" height="70" width="70" />
+        <span class="example-spacer"></span>
+        <mat-list-item *ngIf="isMobile!=false" class="mr-3">
+          <a mat-list-item [routerLink]="['/trips']" routerLinkActive="active-link">
+            <i mat-list-icon class="material-icons">card_travel</i>
+            <p matLine *ngIf="isExpanded">{{ 'HOME.TripsLabel' | translate }}</p>
+          </a>
+        </mat-list-item>
+        <mat-list-item *ngIf="isMobile!=false" class="mr-3">
+          <a mat-list-item [routerLink]="['/new-trip']" routerLinkActive="active-link">
+            <i mat-list-icon class="material-icons">directions_car</i>
+            <p matLine *ngIf="isExpanded">{{ 'HOME.newTripLabel' | translate }}</p>
+          </a>
+        </mat-list-item>
+        <button mat-icon-button [matMenuTriggerFor]="menuNotify" *ngIf="this.authService.isLoggedin()">
+          <mat-icon [matBadge]="userNotifications?.length" matBadgeColor="warn">notification_important</mat-icon>
+        </button>
+        <mat-menu #menuNotify="matMenu">
+          <div mat-menu-item *ngFor="let notfication of userNotifications">
+            <button mat-button (click)="navigateToTrip(notfication.notifyLink)">
+              <span>{{notfication.notificationText}}</span>
+            </button>
+          </div>
+
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon class="example-icon mr-3">account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="/login" *ngIf="!this.authService.isLoggedin()">
+            <span>{{ 'HOME.Login' | translate }}</span>
+          </button>
+          <button mat-menu-item routerLink="/register" *ngIf="!this.authService.isLoggedin()">
+            <span>{{ 'HOME.Signup' | translate }}</span>
+          </button>
+          <button mat-menu-item routerLink="/profile/{{authService.getLoggedInUserId()}}" *ngIf="this.authService.isLoggedin()">
+            <span>{{ 'HOME.MyProfile' | translate }}</span>
+          </button>
+          <button mat-menu-item (click)="this.authService.Logout()" *ngIf="this.authService.isLoggedin()">
+            <span>{{ 'HOME.Logout' | translate }}</span>
+          </button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="menuLang">
+          <mat-icon class="example-icon mr-3">language</mat-icon>
+        </button>
+        <mat-menu #menuLang="matMenu">
+          <button mat-menu-item (click)="translate.use('ar'); setPrefLang('ar')">
+            <span>العربية</span>
+          </button>
+          <button mat-menu-item (click)="translate.use('fr'); setPrefLang('fr')">
+            <span>Française</span>
+          </button>
+          <button mat-menu-item (click)="translate.use('en'); setPrefLang('en')">
+            <span>English</span>
+          </button>
+        </mat-menu>
+
+
+      </mat-toolbar>
+      <div class="container pad">
+        <router-outlet></router-outlet>
+        <simple-notifications></simple-notifications>
+      </div>
+    </div>
+  </mat-sidenav-container>
+</body>

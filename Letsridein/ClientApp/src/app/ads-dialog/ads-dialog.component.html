@@ -1,0 +1,25 @@
+<form [formGroup]="adForm">
+  <div class="container">
+
+    <div class="row">
+     
+      <input type="file" (change)="readUrl($event)" >
+      
+    </div>
+    <br />
+    <div class="row">
+      <mat-form-field>
+        <input matInput placeholder="Enter Valid Link" formControlName="AdvLink">
+       
+      </mat-form-field>
+    </div>
+
+  </div>
+
+</form>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="primary">Cancel</button>
+  <button mat-button color="primary" (click)="createnewAd()">Publish</button>
+</mat-dialog-actions>
+

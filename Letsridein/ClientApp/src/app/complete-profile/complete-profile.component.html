@@ -1,0 +1,109 @@
+<form [formGroup]="EditProfileForm">
+  <div class="container w-100">
+
+    <mat-card-header>
+      <h4 class="card-title">{{ 'HOME.editprofileinfo' | translate }}</h4>
+    </mat-card-header>
+
+
+    <div class="row">
+      <mat-form-field class="m-2">
+        <input matInput placeholder="{{ 'HOME.FullName' | translate }}" formControlName="fullName">
+      </mat-form-field>
+
+      <mat-form-field class="m-2">
+        <input matInput [matDatepicker]="picker" placeholder="{{ 'HOME.BirthDate' | translate }}" formControlName="birthDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+    </div>
+
+    <div class="row">
+
+
+
+    </div>
+    <div class="row">
+
+      <mat-form-field class="m-2">
+        <mat-select placeholder="{{ 'HOME.country' | translate }}" #country formControlName="country">
+          <mat-option *ngFor="let countr of countries" [value]="countr.viewValue">{{countr.viewValue}}</mat-option>
+        </mat-select>
+
+      </mat-form-field>
+      <mat-form-field class="m-2">
+        <mat-select placeholder="{{ 'HOME.Gender' | translate }}" formControlName="gender">
+          <mat-option [value]="true">
+            {{ 'HOME.Male' | translate }}
+          </mat-option>
+          <mat-option [value]="false">
+            {{ 'HOME.Female' | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+
+    </div>
+    <div class="row">
+      <mat-form-field class="m-2 w-100">
+        <span matPrefix>{{filterItemsOfType(country.value)}} &nbsp;</span>
+        <input matInput placeholder="{{ 'HOME.MobileNumber' | translate }}" formControlName="mobileNumber">
+        <mat-icon matSuffix>phone</mat-icon>
+        <mat-error>
+          {{ 'HOME.MobileNumberrequired' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+
+    </div>
+    <div class="row">
+
+      <mat-form-field class="m-2">
+        <input matInput placeholder="{{ 'HOME.carNo' | translate }}" formControlName="carNumber">
+
+        <mat-error>
+          {{ 'HOME.carNorequired' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="m-2">
+        <input matInput placeholder="{{ 'HOME.carInfo' | translate }}" formControlName="carInfo">
+        <mat-error>
+          {{ 'HOME.carInfo' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+    <!-- Car Brand and Model -->
+    <div class="row">
+
+      <mat-form-field class="m-2">
+        <input matInput placeholder="{{ 'HOME.CarModel' | translate }}" formControlName="carModel">
+      </mat-form-field>
+      <mat-form-field class="m-2">
+        <input matInput placeholder="{{ 'HOME.CarBrand' | translate }}" formControlName="carBrand">
+      </mat-form-field>
+    
+
+    </div>
+
+  </div>
+  <div class="row">
+
+    <mat-form-field class="m-2">
+      <input matInput placeholder="{{ 'HOME.manufacturingYear' | translate }}" formControlName="manufacturingYear">
+    </mat-form-field>
+    <mat-form-field class="m-2">
+      <input matInput placeholder="{{ 'HOME.CarColor' | translate }}" formControlName="carColor">
+    </mat-form-field>
+
+  </div>
+
+</form>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close class="btn btn-danger btn-round mt-lg-5">{{ 'HOME.Cancel' | translate }}</button>
+  <button mat-button class="btn btn-danger btn-round mt-lg-5" (click)="updateInfo()">{{ 'HOME.submit' | translate }}</button>
+</mat-dialog-actions>
+
+
